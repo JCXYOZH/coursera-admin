@@ -158,8 +158,6 @@ export default {
       subjectOneList: [],
       // 科目二级分类
       subjectTwoList: [],
-      // 上传路径
-      BASE_API: "http://localhost:8500/admin/oss/uploadAvatarFile",
       // 表单规则
       rules: {
         title: [
@@ -180,6 +178,12 @@ export default {
         "image/tiff",
       ],
     };
+  },
+  // 动态上传地址
+  computed: {
+    uploadAction() {
+      return `${this.$baseURL}/admin/oss/uploadAvatarFile`;
+    },
   },
   // 渲染前执行
   created() {

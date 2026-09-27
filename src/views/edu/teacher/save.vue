@@ -120,8 +120,6 @@ export default {
         // 讲师头像
         avatar: "",
       },
-      // 上传的URL地址
-      uploadAvatarURL: "http://localhost:8500/admin/oss/uploadAvatarFile",
       // 表单规则
       rules: {
         name: [
@@ -140,6 +138,12 @@ export default {
       // 保存按钮是否禁用
       saveButtonDisable: false,
     };
+  },
+  // 头像上传地址从环境变量派生
+  computed: {
+    uploadAvatarURL() {
+      return `${this.$baseURL}/admin/oss/uploadAvatarFile`;
+    },
   },
   // 渲染前执行
   created() {

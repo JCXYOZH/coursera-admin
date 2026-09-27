@@ -119,7 +119,7 @@
             :on-exceed="handleUploadExceed"
             :on-success="handleUploadSuccess"
             :file-list="fileList"
-            :action="BASE_API"
+            :action="uploadVideoAction"
             :limit="1"
             class="upload-demo"
           >
@@ -193,9 +193,13 @@ export default {
       // 文件上传列表
       fileList: [],
       // 接口API
-      // BASE_API: "http://localhost:8500/admin/vod/uploadAliVideo",
-      BASE_API: "http://192.168.188.3:8500/admin/vod/upload",
     };
+  },
+  // 视频上传地址从 $baseURL 派生
+  computed: {
+    uploadVideoAction() {
+      return `${this.$baseURL}/admin/vod/upload`;
+    },
   },
   created() {
     if (this.$route.params && this.$route.params.id) {

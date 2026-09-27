@@ -21,6 +21,7 @@ import '@/permission' // permission control
 // 判断是否有按钮权限
 import { hasButtonPermission } from './utils/permission'
 
+// 统一从环境变量读取后端地址；fallback 只是兜底，正式部署使用 VUE_APP_BASE_API
 Vue.prototype.$baseURL = process.env.VUE_APP_BASE_API || 'http://localhost:8500'
 
 // set ElementUI lang to EN

@@ -8,7 +8,8 @@
         <el-button type="primary" icon="el-icon-plus" @click="addTopSubject"
           >添加一级科目</el-button
         >
-        <a href="http://192.168.188.3:8500/admin/edu/subject/downloadSubject">
+        <!-- 使用计算属性 -->
+        <a :href="downloadSubjectUrl">
           <el-button
             type="warning"
             icon="el-icon-download"
@@ -81,6 +82,12 @@ export default {
       // 过滤文字
       filterText: "",
     };
+  },
+  // 导出链接从 $baseURL 派生
+  computed: {
+    downloadSubjectUrl() {
+      return `${this.$baseURL}/admin/edu/subject/downloadSubject`;
+    },
   },
   // 监控
   watch: {

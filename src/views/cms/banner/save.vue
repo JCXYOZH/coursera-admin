@@ -25,7 +25,7 @@
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
-          :action="BASE_API"
+          :action="uploadAction"
           class="banner-uploader"
         >
 <!--          <img :src="process.env.VUE_APP_BASE_API + '/' + banner.imageUrl" class="banner-uploader" />-->
@@ -60,8 +60,6 @@ export default {
         // 点击后跳转链接
         linkUrl: "",
       },
-      // 上传地址
-      BASE_API: "http://localhost:8500/admin/oss/uploadAvatarFile",
       // 允许的图片类型
       allowImageType: [
         "image/png",
@@ -75,6 +73,12 @@ export default {
         "image/tiff",
       ],
     };
+  },
+  // 上传地址动态派生，切换环境无需修改此处
+  computed: {
+    uploadAction() {
+      return `${this.$baseURL}/admin/oss/uploadAvatarFile`;
+    },
   },
   // 渲染前执行
   created() {
@@ -135,23 +139,19 @@ export default {
     },
     // 添加或者更新
     addOrUpdate() {
-      if (!this.banner.id) {
-        this.addBanner();
-      } else {
-        this.updateBanner();
-      }
+      if (!this.banner.id) this.addBanner();
+      else this.updateBanner();
     },
     // 上传封面成功调用的方法
     handleAvatarSuccess(res, file) {
-      this.banner.imageUrl = res.data;
-      this.$forceUpdate();
+      this.$set(this.banner, "imageUrl", res.data);
     },
     //上传之前调用的方法
     beforeAvatarUpload(file) {
       if (this.allowImageType.indexOf(file.type.toLowerCase()) === -1) {
         this.$message.error("上传文件不符!");
+        return false;
       }
-
       if (file.size / 1024 / 1024 > 3) {
         this.$message.error("上传Banner图片大小不能超过 3MB!");
         return false;
